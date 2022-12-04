@@ -11,10 +11,18 @@ public class laser : MonoBehaviour
     public Light ceilingLight;
     public Light Livingroom1;
     public Light Livingroom2;
+
+    public ParticleSystem kitchen;
+    public int iter;
     // Start is called before the first frame update
     void Start()
     {
         rendo = gameObject.GetComponent<LineRenderer>();
+        kitchen = gameObject.GetComponent<ParticleSystem>();
+        iter = 0;
+        // var emission = kitchen.emission; // Stores the module in a local variable
+        // emission.enabled = false; // Applies the new value directly to the Particle System
+        // kitchen.enableEmission = false;
     }
 
     // Update is called once per frame
@@ -110,6 +118,15 @@ public class laser : MonoBehaviour
                     }
                     else{
                         rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(-90,0,0);
+                    }
+                     
+                }
+                else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "WaterTap"){
+                    if(kitchen.isPlaying == false){
+                        kitchen.Play();
+                    }
+                    else{
+                        kitchen.Stop();
                     }
                      
                 }
