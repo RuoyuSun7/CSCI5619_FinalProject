@@ -9,15 +9,17 @@ public class PlayerCTRL : MonoBehaviour
     private float g = 10f;
     public OVRInput.Controller controller;
     public GameObject reference;
+    private float yy;
     void Start()
     {
-        
+        yy = reference.transform.position.y;
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerMove();
+        //reference.transform.position.y = yy;
     }
 
     void PlayerMove(){
@@ -27,5 +29,6 @@ public class PlayerCTRL : MonoBehaviour
         velocity = Camera.main.transform.TransformDirection(velocity);
         //velocity.y -= g;
         reference.transform.Translate(velocity*Time.deltaTime/10.0f);
+        reference.transform.position = new Vector3(reference.transform.position.x, yy, reference.transform.position.z) ;
     }
 }

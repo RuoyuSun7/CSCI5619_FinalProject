@@ -7,6 +7,10 @@ public class laser : MonoBehaviour
 {
     public LineRenderer rendo;
     public VideoPlayer player;
+    
+    public Light ceilingLight;
+    public Light Livingroom1;
+    public Light Livingroom2;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,26 +38,53 @@ public class laser : MonoBehaviour
         if(Physics.Raycast(ray, out RaycastHit rayHit, length)){
             endPos = rayHit.point;
             Debug.Log(rayHit.collider.gameObject.name);
-            if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "door"){
-                if(rayHit.collider.gameObject.transform.parent.transform.parent.transform.eulerAngles == new Vector3(0,0,0)){
-                    rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,-90,0);
+            if(rayHit.collider.gameObject.tag != "Wall"){
+                 if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "CeilingLightButton"){
+                    if(ceilingLight.enabled == true){
+                        ceilingLight.enabled = false;
+                    }
+                    else{
+                        ceilingLight.enabled = true;
+                    }
                 }
-                else{
-                    rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,90,0);
+                else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "bulb1"){
+                    if(Livingroom1.enabled == true){
+                        Livingroom1.enabled = false;
+                    }
+                    else{
+                        Livingroom1.enabled = true;
+                    }
                 }
+                else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "bulb2"){
+                    if(Livingroom2.enabled == true){
+                        Livingroom2.enabled = false;
+                    }
+                    else{
+                        Livingroom2.enabled = true;
+                    }
+                }
+                else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "door"){
+                    if(rayHit.collider.gameObject.transform.parent.transform.parent.transform.eulerAngles == new Vector3(0,0,0)){
+                        rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,-90,0);
+                    }
+                    else{
+                        rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,90,0);
+                    }
+                }
+                else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "TVButton"){
+                    if(player.isPlaying == true){
+                        player.Pause();
+                    }
+                    else
+                    {
+                        player.Play();
+                    }
+                }
+                // else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name != "Plane001"){
+                //     rayHit.collider.gameObject.transform.position = endPos;
+                // }
             }
-            else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "TVButton"){
-                if(player.isPlaying == true){
-                    player.Pause();
-                }
-                else
-                {
-                    player.Play();
-                }
-            }
-            else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name != "Plane001"){
-                rayHit.collider.gameObject.transform.position = endPos;
-            }
+           
         }
 
         rendo.SetPosition(0, targerPos);
