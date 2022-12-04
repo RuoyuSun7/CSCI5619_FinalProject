@@ -64,12 +64,22 @@ public class laser : MonoBehaviour
                     }
                 }
                 else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "door"){
-                    if(rayHit.collider.gameObject.transform.parent.transform.parent.transform.eulerAngles == new Vector3(0,0,0)){
-                        rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,-90,0);
+                    if(rayHit.collider.gameObject.tag == "Outer"){
+                        if(rayHit.collider.gameObject.transform.parent.transform.parent.transform.eulerAngles == new Vector3(0,0,0)){
+                            rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,90,0);
+                        }
+                        else{
+                            rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,-90,0);
+                        }
                     }
                     else{
-                        rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,90,0);
-                    }
+                         if(rayHit.collider.gameObject.transform.parent.transform.parent.transform.eulerAngles == new Vector3(0,0,0)){
+                            rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,-90,0);
+                        }
+                        else{
+                            rayHit.collider.gameObject.transform.parent.transform.parent.transform.Rotate(0,90,0);
+                        }
+                    }   
                 }
                 else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name == "TVButton"){
                     if(player.isPlaying == true){
@@ -78,6 +88,17 @@ public class laser : MonoBehaviour
                     else
                     {
                         player.Play();
+                    }
+                }
+                else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.tag == "drawer"){
+                    float xx = rayHit.collider.gameObject.transform.position.x;
+                    if(rayHit.collider.gameObject.transform.eulerAngles == new Vector3(0,0,0)){
+                        rayHit.collider.gameObject.transform.Rotate(0.1f,0,0);
+                        rayHit.collider.gameObject.transform.position = new Vector3(rayHit.collider.gameObject.transform.position.x+0.7f, rayHit.collider.gameObject.transform.position.y,rayHit.collider.gameObject.transform.position.z);
+                    }
+                    else{
+                        rayHit.collider.gameObject.transform.Rotate(-0.1f,0,0);
+                        rayHit.collider.gameObject.transform.position = new Vector3(rayHit.collider.gameObject.transform.position.x-0.7f, rayHit.collider.gameObject.transform.position.y,rayHit.collider.gameObject.transform.position.z);
                     }
                 }
                 // else if(OVRInput.Get(OVRInput.Button.Three) && rayHit.collider.gameObject.name != "Plane001"){
